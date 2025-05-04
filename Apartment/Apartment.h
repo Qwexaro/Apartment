@@ -19,8 +19,6 @@ class Building : public CheckInfo
 {
     std::vector<std::shared_ptr<Apartment>> apartments;
 public:
-    Building();
-
     ~Building();
 
     void info() const override;
