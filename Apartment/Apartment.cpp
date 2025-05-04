@@ -1,18 +1,20 @@
 #include "Apartment.h"
 
-Apartment::Apartment(double area, int rooms) : area(area), rooms(rooms) {}
+Apartment::Apartment() : area{0}, rooms{0}{}
+
+Apartment::Apartment(double area, int rooms) : area{ area }, rooms{ rooms } {}
 
 Apartment::~Apartment() { std::cout << " вартирира разрушена" << std::endl; }
+
+Building::Building() {}
+
+Building::~Building() { std::cout << "постройка разрушилась" << std::endl; }
 
 void Apartment::info() const
 {
     std::cout << " вартира с площадью: " << area
         << " метров, с количеством комнат: " << rooms << std::endl;
 }
-
-Building::Building() {}
-
-Building::~Building() { std::cout << "постройка разрушилась" << std::endl; }
 
 void Building::info() const
 {
@@ -24,7 +26,6 @@ void Building::addApartment(double area, int rooms)
 {
     apartments.push_back(Apartment(area, rooms));
 }
-
 
 void Building::removeApartment(int index)
 {

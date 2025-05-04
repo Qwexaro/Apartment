@@ -7,6 +7,7 @@ class Apartment : public CheckInfo
     double area;
     int rooms;
 public:
+    Apartment();
     Apartment(double area, int rooms);
 
     ~Apartment();
