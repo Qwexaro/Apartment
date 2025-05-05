@@ -10,7 +10,7 @@ Apartment::~Apartment()
         << " и с rooms: " << rooms << " разрушена" << std::endl; 
 }
 
-Building::~Building() { std::cout << "Постройка разрушилась" << std::endl; }
+Building::~Building() { apartments.clear(); std::cout << "Постройка разрушилась" << std::endl;  }
 
 void Apartment::info() const
 {
@@ -28,7 +28,7 @@ void Building::info() const
 
 void Building::addApartment(double area, int rooms) 
 {
-    apartments.push_back(std::make_shared<Apartment>(area, rooms));
+    apartments.push_back(std::make_unique<Apartment>(area, rooms));
 }
 
 void Building::removeApartment(int index)

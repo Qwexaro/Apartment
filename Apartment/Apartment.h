@@ -17,7 +17,7 @@ public:
 
 class Building : public CheckInfo
 {
-    std::vector<std::shared_ptr<Apartment>> apartments;
+    std::vector<std::unique_ptr<Apartment>> apartments;
 public:
     ~Building();
 
