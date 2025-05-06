@@ -1,27 +1,49 @@
-#pragma once
-
-//#include <iostream>
-#include <ctime>
+#include <iostream>
 #include <vector>
-#include "Interface.h"
+#include <ctime>
 
 class Dice
 {
-	int facets, num;
+private:
+    int sides;
 public:
-	Dice();
-	~Dice();
-	//int throwDice();
-	friend std::ostream& operator<<(std::ostream& out, const Dice& dice);
+    Dice(int s) : sides(s) {}
+    ~Dice() {
+        std::cout << "dice has bin destructed";
+    }
+
+    int roll() {
+        return rand() % sides + 1;
+    }
 };
 
-class Player : public Take, public Put, public Throw, public Dice
+class Player
 {
-	std::vector<std::unique_ptr<Dice>> dices;
+private:
+    std::vector<std::unique_ptr<Dice>> diceCollection;
+
 public:
-	Player();
-	~Player();
-	void take() override;
-	void throwCube() override;
-	void put() override;
+    Player();
+    ~Player() {
+        std::cout << "player has bin destructed";
+    }
+
+    void takeDice(std::unique_ptr<Dice> dice) {
+        diceCollection.push_back(std::move(dice));
+    }
+
+    void putDice(int index) {
+        if (index < diceCollection.size()) {
+            std::cout << "Кубик с " << diceCollection.at(index)->roll() << " возвращен на стол.\n";
+            diceCollection.erase(diceCollection.begin() + index);
+        }
+    }
+
+    void rollDice()
+    {
+        for (int i = 0; i < diceCollection.size(); i++)
+        {
+            std::cout << "Бросок кубика " << i + 1 << ": " << diceCollection.at(i)->roll() << "\n";
+        }
+    }
 };
