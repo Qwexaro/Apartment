@@ -6,13 +6,13 @@ int main()
     srand(static_cast<int>(time(0)));
     Player player;
 
-    std::unique_ptr<Dice> dice1 = std::make_unique<Dice>(6);
-    std::unique_ptr<Dice> dice2 = std::make_unique<Dice>(12);
-    std::unique_ptr<Dice> dice3 = std::make_unique<Dice>(9);
+    std::shared_ptr<Dice> dice1 = std::make_shared<Dice>(6);
+    std::shared_ptr<Dice> dice2 = std::make_shared<Dice>(12);
+    std::shared_ptr<Dice> dice3 = std::make_shared<Dice>(9);
     
-    player.takeDice(std::move(dice1));
-    player.takeDice(std::move(dice2));
-    player.takeDice(std::move(dice3));
+    player.takeDice(dice1);
+    player.takeDice(dice2);
+    player.takeDice(dice3);
 
     player.rollDice();
 
@@ -20,7 +20,8 @@ int main()
 
     player.rollDice();
 
-    player.takeDice(std::move(dice1));
+    player.takeDice(dice2);
+
     player.rollDice();
    
     return 0;

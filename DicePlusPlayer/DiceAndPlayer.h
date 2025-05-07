@@ -4,26 +4,28 @@
 
 class Dice
 {
-    int facets;
+    int facets, id;
+    static int amount_dices;
 public:
     
-    Dice(int s);
+    Dice(int facets);
     
     ~Dice();
 
-    int throwDice();
+    int getId() const;
+    int numberDice();
 };
 
 class Player
 {
-    std::vector<std::unique_ptr<Dice>> diceCollection;
+    std::vector<std::shared_ptr<Dice>> dice_collection;
 public:
-    
+    Player();
     ~Player();
 
-    void takeDice(std::unique_ptr<Dice> dice);
+    void takeDice(std::shared_ptr<Dice>& dice);
 
-    void putDice(int index);
+    Player& putDice(int index);
 
-    void rollDice();
+    Player& rollDice();
 };

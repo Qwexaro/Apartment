@@ -1,41 +1,54 @@
 #include "DiceAndPlayer.h"
 
+int Dice::amount_dices = 0;
 
-Dice::Dice(int s) : facets(s) {}
+Dice::Dice(int facets) : facets{ facets }, id{ ++amount_dices } {}
+
+Player::Player(){}
 
 Dice::~Dice() 
 {
-    std::cout << "dice has bin destructed" << std::endl;
+    std::cout << "dice with id: " << id << " has bin destructed" << std::endl;
 }
 
-int Dice::throwDice() 
+int Dice::numberDice() 
 {
     return rand() % facets + 1;
+}
+
+int Dice::getId() const
+{
+    return id;
 }
 
 Player::~Player() 
 {
     std::cout << "player has bin destructed" << std::endl;
+    dice_collection.clear();
 }
 
-void Player::takeDice(std::unique_ptr<Dice> dice) 
+void Player::takeDice(std::shared_ptr<Dice>& dice) 
 {
-    diceCollection.push_back(std::move(dice));
+    std::cout << "Берется dice с id: " << dice->getId() << std::endl;
+    dice_collection.push_back(dice);
+    
 }
 
-void Player::putDice(int index) 
+Player& Player::putDice(int index) 
 {
-    if (index < diceCollection.size()) 
+    if (index < dice_collection.size()) 
     {
-        std::cout << "Кубик с " << diceCollection.at(index)->throwDice() << " возвращен на стол.\n";
-        diceCollection.erase(diceCollection.begin() + index);
+        std::cout << "Кубик с id: " << dice_collection.at(index)->getId() << " возвращен на стол.\n";
+        dice_collection.erase(dice_collection.begin() + index);
     }
+    return *this;
 }
 
-void Player::rollDice()
+Player& Player::rollDice()
 {
-    for (int i = 0; i < diceCollection.size(); i++)
+    for (int i = 0; i < dice_collection.size(); i++)
     {
-        std::cout << "Бросок кубика " << i + 1 << ": " << diceCollection.at(i)->throwDice() << "\n";
+        std::cout << "Бросок кубика с id: "<< dice_collection.at(i)->getId() << ": " << dice_collection.at(i)->numberDice() << "\n";
     }
+    return *this;
 }
